@@ -27,7 +27,7 @@ export const Recipe = () => {
 
   // Fetch the full list of recipes
   useEffect(() => {
-    fetch("http://localhost:8000/api/recipe")
+    fetch(`${process.env.REACT_APP_API_BASENAME}/recipe`)
       .then((response) => response.json())
       .then((data) => setRecipes(data));
   }, []);
@@ -36,7 +36,9 @@ export const Recipe = () => {
   useEffect(() => {
     if (searchTerm) {
       setCurrentPage(1);
-      fetch(`http://localhost:8000/api/recipe/search?dishName=${searchTerm}`)
+      fetch(
+        `${process.env.REACT_APP_API_BASENAME}/recipe/search?dishName=${searchTerm}`
+      )
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(data.slice(0, 5));
@@ -70,7 +72,7 @@ export const Recipe = () => {
 
   const handleViewList = () => {
     const recipeIds = selectedRecipes.map((r) => r._id);
-    fetch("http://localhost:8000/api/recipe/grocery-list", {
+    fetch(`${process.env.REACT_APP_API_BASENAME}/recipe/grocery-list`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ recipeIds }),
@@ -84,7 +86,7 @@ export const Recipe = () => {
 
   const handleAddRecipe = (recipeName) => {
     setLoading(true);
-    fetch("http://localhost:8000/api/recipe/add-recipe", {
+    fetch(`${process.env.REACT_APP_API_BASENAME}/recipe/add-recipe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
