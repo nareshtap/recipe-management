@@ -6,11 +6,10 @@ import { GoogleLogin } from "@react-oauth/google";
 import { LoginImage } from "../../assets/images/LoginImg";
 
 export const Login = ({ setIsAuthenticated }) => {
-
   const handleLoginSuccess = async (response) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/auth/google-login",
+        `${process.env.REACT_APP_API_BASENAME}/auth/google-login`,
         {
           token: response.credential,
         }
